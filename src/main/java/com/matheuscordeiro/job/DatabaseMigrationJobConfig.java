@@ -17,10 +17,10 @@ public class DatabaseMigrationJobConfig {
 	}
 
 	@Bean
-	public Job databaseMigrationJob(Step migrationPersonStep, Step migrationBankDataStep) {
+	public Job databaseMigrationJob(Step migratePersonStep, Step migrateBankDataStep) {
 		return jobBuilderFactory.get("databaseMigrationJob")
-				.start(migrationBankDataStep)
-				.next(migrationBankDataStep)
+				.start(migratePersonStep)
+				.next(migrateBankDataStep)
 				.incrementer(new RunIdIncrementer())
 				.build();
 	}
