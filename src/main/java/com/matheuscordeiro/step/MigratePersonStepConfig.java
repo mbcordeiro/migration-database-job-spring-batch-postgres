@@ -3,7 +3,8 @@ package com.matheuscordeiro.step;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemReader;
-import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.file.FlatFileItemWriter;
+import org.springframework.batch.item.support.ClassifierCompositeItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,8 +20,10 @@ public class MigratePersonStepConfig {
 	}
 
 	@Bean
-	public Step migratePersonStep(ItemReader<Person> filePersonItemReader, ItemWriter<Person> databasePersonItemWriter) {
+	public Step migratePersonStep(ItemReader<Person> filePersonItemReader,
+			ClassifierCompositeItemWriter<Person> personClassifierWriter,
+			FlatFileItemWriter<Person> filePersonInvalidWriter) {
 		return stepBuilderFactory.get("migratePersonStep").<Person, Person>chunk(1).reader(filePersonItemReader)
-				.writer(databasePersonItemWriter).build();
+				.writer(personClassifierWriter).stream(filePersonInvalidWriter).build();
 	}
 }
