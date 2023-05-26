@@ -21,7 +21,7 @@ public class MigrateBankDataStepConfig {
 
 	@Bean
 	public Step migrateBankDataStep(ItemReader<BankData> fileBankDataItemReader, ItemWriter<BankData> databaseBankDataItemWriter) {
-		return stepBuilderFactory.get("migrateBankDataStep").<BankData, BankData>chunk(1).reader(fileBankDataItemReader)
+		return stepBuilderFactory.get("migrateBankDataStep").<BankData, BankData>chunk(10000).reader(fileBankDataItemReader)
 				.writer(databaseBankDataItemWriter).build();
 	}
 }

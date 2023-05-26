@@ -23,7 +23,7 @@ public class MigratePersonStepConfig {
 	public Step migratePersonStep(ItemReader<Person> filePersonItemReader,
 			ClassifierCompositeItemWriter<Person> personClassifierWriter,
 			FlatFileItemWriter<Person> filePersonInvalidWriter) {
-		return stepBuilderFactory.get("migratePersonStep").<Person, Person>chunk(1).reader(filePersonItemReader)
+		return stepBuilderFactory.get("migratePersonStep").<Person, Person>chunk(10000).reader(filePersonItemReader)
 				.writer(personClassifierWriter).stream(filePersonInvalidWriter).build();
 	}
 }
