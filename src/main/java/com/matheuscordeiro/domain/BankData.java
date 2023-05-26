@@ -6,6 +6,7 @@ public class BankData {
 	private int agency;
 	private int account; 
 	private int bank;
+	
 	public int getId() {
 		return id;
 	}
